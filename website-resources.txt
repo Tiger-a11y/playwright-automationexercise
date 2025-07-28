@@ -1,0 +1,12 @@
+Website	Description	Features to Test
+
+Website	                                                |Description                        |Features to Practice
+https://automationexercise.com	                        |🛍️ E-commerce demo                 |Login, cart, checkout, forms
+https://www.saucedemo.com/	                            |🧪 E-commerce site by Sauce Labs	|Login, cart, sort, logout
+https://parabank.parasoft.com/parabank/index.htm	    |🏦 Banking site	                |Register, login, fund transfer
+https://www.shopeasy99.com/	                            |🛒 E-commerce for automation	    |Add to cart, filters, checkout
+https://demoqa.com	                                    |🧱 UI elements and form testing	|Alerts, dropdowns, drag-drop, forms
+https://the-internet.herokuapp.com                      |⚙️ Popular automation site	        |Frames, auth, upload/download, alerts
+https://practicetestautomation.com/practice-test-login/	|🔐 Simple login tests	            |Valid/invalid login
+https://playwright.dev	                                |📘 Official Playwright docs site	|Navigation, links, search
+https://reqres.in	                                    |🔁 For testing API automation	    |Combine API + UI flows

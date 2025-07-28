@@ -1,0 +1,13 @@
+| Folder               | Purpose                                              |
+| -------------------- | ---------------------------------------------------- |
+| `src/`               | Core logic if needed (custom commands, app models)   |
+| `configs/`           | Config files (URLs, environment data)                |
+| `fixtures/`          | Static test data (user info, product data)           |
+| `pages/`             | Page Object Model classes                            |
+| `playwright-report/` | Auto-generated Playwright HTML reports               |
+| `resources/`         | Assets (screenshots, logs, etc.)                     |
+| `test-results/`      | Playwright's raw test output                         |
+| `test/ui/`           | UI tests (e.g. login, cart, checkout)                |
+| `test/api/`          | If API testing is added later                        |
+| `test/regressions/`  | Critical flows (regression suite)                    |
+| `utils/`             | Helpers (data generators, environment manager, etc.) |
