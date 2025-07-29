@@ -1,48 +1,29 @@
-import { Locator, Page, expect } from '@playwright/test';
+// pages/LoginPage.ts
+import { Locator, Page } from '@playwright/test';
+import { BasePage } from './base';
 
-export class LoginPage {
-    private usernameInput: Locator;
+export class LoginPage extends BasePage {
+    private emailInput: Locator;
     private passwordInput: Locator;
-    private adminRadio: Locator;
-    private userRadio: Locator;
     private loginButton: Locator;
-    private popup: Locator;
-    private termsCheck: Locator;
-    private popupAccept: Locator;
+    private loggedInText: Locator;
 
-    constructor(private page: Page) {
-        this.usernameInput = this.page.locator('input#username');
-        this.passwordInput = this.page.locator('input#password');
-        this.userRadio = this.page.locator("input#usertype[value='user']");
-        this.adminRadio = this.page.locator("input#usertype[value='admin']");
-        this.termsCheck = this.page.locator('input#terms');
-        this.loginButton = this.page.locator('input#signInBtn');
+    constructor(page: Page) {
+        super(page);
 
-        // Initialize popup locators
-        this.popup = this.page.locator('div.modal-content');
-        this.popupAccept = this.page.locator('button#okayBtn');
+        this.emailInput = this.page.locator('input[data-qa="login-email"]');
+        this.passwordInput = this.page.locator('input[data-qa="login-password"]');
+        this.loginButton = this.page.locator('button[data-qa="login-button"]');
+        this.loggedInText = this.page.locator('a:has-text("Logged in as")');
     }
 
-    async gotoLoginPage() {
-        await this.page.goto('https://rahulshettyacademy.com/loginpagePractise/');
+    async login(email: string, password: string) {
+        await this.type(this.emailInput, email);
+        await this.type(this.passwordInput, password);
+        await this.click(this.loginButton);
     }
 
-    async handlePopupIfPresent() {
-        if (await this.popup.isVisible({ timeout: 2000 }).catch(() => false)) {
-            await this.popupAccept.click();
-        }
-    }
-
-    async login(username: string, password: string) {
-        await this.handlePopupIfPresent(); // 🔥 Handle popup just before radio click
-        await this.usernameInput.fill(username);
-        await this.passwordInput.fill(password);
-
-        await this.adminRadio.click();
-        await this.termsCheck.click();
-        await this.loginButton.click();
-
-        // Optionally, handle popup again after login (if needed)
-        await this.handlePopupIfPresent();
+    async assertLoginSuccessful() {
+        await this.waitForSelector(this.loggedInText);
     }
 }

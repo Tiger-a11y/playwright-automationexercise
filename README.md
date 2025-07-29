@@ -1,5 +1,11 @@
 # 🧪 Playwright Automation Framework - AutomationExercise
 
+<!-- Banner Image -->
+<p align="center">
+  <img src="assets\cover.png" alt="Automation Framework Banner" style="width:100%; max-width:1200px;">
+</p>
+
+
 End-to-end automation test framework for [AutomationExercise](https://automationexercise.com), built with [Playwright](https://playwright.dev).
 
 ---
@@ -66,19 +72,42 @@ npx playwright show-report
 ## ⚙️ Playwright Configuration (playwright.config.ts)
 ```ts
 import { defineConfig } from '@playwright/test';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
 
 export default defineConfig({
-  testDir: './test',
-  timeout: 30000,
-  retries: 1,
+  testDir: './tests', // Or './test' if your actual test folder is named that
+  timeout: 30 * 1000,
+  expect: {
+    timeout: 5000,
+  },
+  reporter: 'html',
+
   use: {
-    baseURL: 'https://automationexercise.com',
     browserName: 'chromium',
+    headless: false, // 👀 UI opens by default
+    baseURL: process.env.BASE_URL || 'https://automationexercise.com',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
   },
-  reporter: [['html'], ['list']],
+  
+   // Define module-wise projects
+  projects: [
+    {
+      name: 'auth',
+      testMatch: /.*auth\/.*\.spec\.ts/,
+    },
+    {
+      name: 'products',
+      testMatch: /.*products\/.*\.spec\.ts/,
+    },
+    {
+      name: 'contact',
+      testMatch: /.*contact\/.*\.spec\.ts/,
+    },
+  ]
 });
 ```
 
@@ -145,6 +174,58 @@ export class LoginPage {
 ```bash
 npx playwright show-report
 ```
+
+## 🧪 Run Tests by Suite or Module (like TestNG groups)
+You can define and run groups of tests similar to TestNG groups using:
+
+* ✅ Tag-based execution
+- Use @smoke or @regression in your test titles or with test.describe():
+
+```ts
+test('@smoke Should login successfully', async ({ page }) => {
+  // smoke test logic
+});
+```
+
+* Run tagged tests:
+
+```bash
+npm run test:smoke           # only @smoke tests
+npm run test:regression      # all except @smoke
+```
+
+
+* ✅ Module-based execution
+- Organize tests in folders (/auth, /products, etc.) and run by module:
+
+```bash
+npm run test:auth            # auth only
+npm run test:products        # products only
+npm run test:auth-contact    # auth + contact modules
+```
+
+* ✅ Combined multiple modules
+
+```bash
+npm run test:modules         # all defined modules (auth, contact, products)
+package.json Scripts Reference
+```
+
+```json
+"scripts": {
+  "test:auth": "npx playwright test --project=auth",
+  "test:products": "npx playwright test --project=products",
+  "test:contact": "npx playwright test --project=contact",
+  "test:modules": "npx playwright test --project=auth --project=products --project=contact",
+  "test:smoke": "npx playwright test --grep @smoke",
+  "test:regression": "npx playwright test --grep-invert @smoke",
+  "test:auth-contact": "npx playwright test tests/ui/{auth,contact}",
+  "test:product-only": "npx playwright test tests/ui/products",
+  "test:all-modules": "npx playwright test tests/ui"
+}
+```
+
+* ✅ You can integrate these scripts easily into Jenkins, GitHub Actions, or any CI/CD pipeline.
 
 ## 🔧 Future Enhancements
 - Add API test suite under test/api/
