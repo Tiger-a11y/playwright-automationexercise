@@ -1,3 +1,9 @@
+<!-- Banner Image -->
+<p align="center">
+  <img src="assets\cover.png" alt="Automation Framework Banner" style="width:100%; max-width:1200px;">
+</p>
+
+
 # 🧪 Playwright Automation Framework - AutomationExercise
 
 End-to-end automation test framework for [AutomationExercise](https://automationexercise.com), built with [Playwright](https://playwright.dev).
