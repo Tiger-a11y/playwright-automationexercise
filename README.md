@@ -157,4 +157,23 @@ npx playwright show-report
 - Feel free to open issues or submit PRs to enhance this framework.
 - Happy Testing 🚀
 
-- # Would you like this saved as a `.md` file for direct download? I can generate that for you as well.
+---
+
+## 🤝 Collaboration Guidelines
+
+- All contributions should be made via **pull requests** from a separate branch.
+- Ensure your changes follow the project structure and pass Playwright tests locally.
+- Pull requests will be reviewed and approved by the repository owner before merging into `main`.
+- Direct pushes to the `main` branch are restricted.
+
+---
+
+## 🍴 Forking Instructions
+
+If you’d like to contribute or customize this project:
+
+1. **Fork** the repository by clicking the "Fork" button at the top-right on GitHub.
+2. **Clone** your forked repository locally:
+   ```bash
+   git clone https://github.com/your-username/playwright-automationexercise.git
+   cd playwright-automationexercise
