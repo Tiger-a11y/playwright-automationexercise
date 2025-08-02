@@ -13,7 +13,7 @@ export default defineConfig({
 
   use: {
     browserName: 'chromium',
-    headless: false, // 👀 UI opens by default
+    headless: true, // 👀 UI opens by default
     baseURL: process.env.BASE_URL || 'https://automationexercise.com',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
