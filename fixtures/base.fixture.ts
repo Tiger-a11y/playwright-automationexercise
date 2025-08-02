@@ -9,7 +9,7 @@ type TestFixtures = {
 
 const test = base.extend<TestFixtures>({
   browser: async ({}, use) => {
-    const browser = await chromium.launch({ headless: false });
+    const browser = await chromium.launch();
     await use(browser);
     await browser.close();
   },
