@@ -18,9 +18,12 @@ export default defineConfig({
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
+    launchOptions: {
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    }
   },
-  
-   // Define module-wise projects
+
+  // Define module-wise projects
   projects: [
     {
       name: 'auth',

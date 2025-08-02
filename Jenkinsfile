@@ -19,6 +19,10 @@ pipeline {
         ], description: 'Choose the Playwright test suite to run')
     }
 
+    environment {
+        CI = 'true'  // Ensures headless environment compatibility
+    }
+
     stages {
         stage('Clone') {
             steps {
@@ -41,6 +45,16 @@ pipeline {
         stage('Run Tests') {
             steps {
                 sh "npm run ${params.SUITE}"
+            }
+        }
+
+        stage('Publish Report') {
+            steps {
+                publishHTML(target: [
+                    reportDir: 'playwright-report',
+                    reportFiles: 'index.html',
+                    reportName: 'Playwright Report'
+                ])
             }
         }
     }
