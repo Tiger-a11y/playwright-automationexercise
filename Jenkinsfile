@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs 'Node18'
+        nodejs 'Node18'  // Ensure this is installed via Jenkins global tools
     }
 
     parameters {
@@ -20,12 +20,11 @@ pipeline {
     }
 
     environment {
-        CI = 'true'
-        BASE_URL = 'https://automationexercise.com'  // Or inject securely
+        CI = 'true'  // Forces CI-mode for Playwright
     }
 
     stages {
-        stage('Clone') {
+        stage('Clone Repo') {
             steps {
                 git branch: 'main', url: 'https://github.com/Tiger-a11y/playwright-automationexercise'
             }
@@ -43,7 +42,7 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
+        stage('Run Selected Suite') {
             steps {
                 sh "npm run ${params.SUITE}"
             }
@@ -54,7 +53,7 @@ pipeline {
                 publishHTML(target: [
                     reportDir: 'playwright-report',
                     reportFiles: 'index.html',
-                    reportName: 'Playwright Report'
+                    reportName: 'Playwright HTML Report'
                 ])
             }
         }
