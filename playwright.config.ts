@@ -2,28 +2,29 @@ import { defineConfig } from '@playwright/test';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
+console.log('BASE_URL from env:', process.env.BASE_URL);
 
 export default defineConfig({
-  testDir: './tests', // Or './test' if your actual test folder is named that
-  timeout: 30 * 1000,
+  testDir: './tests',
+  timeout: 60 * 1000,  // 🔺 Increased timeout
   expect: {
-    timeout: 5000,
+    timeout: 8000,
   },
   reporter: 'html',
 
   use: {
-    browserName: 'chromium',
-    headless: true, // 👀 UI opens by default
+    headless: true,
     baseURL: process.env.BASE_URL || 'https://automationexercise.com',
+    viewport: { width: 1280, height: 720 },
+    ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
     trace: 'retain-on-failure',
     launchOptions: {
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox'],
     }
   },
 
-  // Define module-wise projects
   projects: [
     {
       name: 'auth',

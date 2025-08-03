@@ -20,7 +20,8 @@ pipeline {
     }
 
     environment {
-        CI = 'true'  // Ensures headless environment compatibility
+        CI = 'true'
+        BASE_URL = 'https://automationexercise.com'  // Or inject securely
     }
 
     stages {
