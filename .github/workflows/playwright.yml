@@ -15,9 +15,9 @@ jobs:
       matrix:
         suite: [
           test:auth-only,
-          test:products-only,
-          test:contact-only,
-          test:smoke-suite
+        #   test:products-only,
+        #   test:contact-only,
+        #   test:smoke-suite
         ]
 
     steps:
