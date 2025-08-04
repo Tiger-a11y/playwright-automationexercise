@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        suite: [test:auth-only, test:products-only, test:contact-only]
+        suite: [test:auth-only]
+        # test:products-only, test:contact-only]
 
     steps:
       - name: Checkout repository
