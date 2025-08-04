@@ -1,40 +1,40 @@
-name: Playwright Matrix Test Suites
+name: Playwright Test Matrix
 
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  test:
+  run-playwright-suites:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
-        suite: [test:auth-only]
-        # test:products-only, test:contact-only]
+        suite: [test:auth-only, test:products-only, test:contact-only]
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: 18
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+      - name: Install Playwright and browsers
+        uses: microsoft/playwright-github-action@v1
 
-      - name: Run Playwright Suite - ${{ matrix.suite }}
+      - name: Run test suite - ${{ matrix.suite }}
         run: npm run ${{ matrix.suite }}
 
-      - name: Upload Playwright Report - ${{ matrix.suite }}
-        if: always()  # ensure report is uploaded even if tests fail
+      - name: Upload HTML Report
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.suite }}-report
+          name: playwright-report-${{ matrix.suite }}
           path: playwright-report
